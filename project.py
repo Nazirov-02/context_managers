@@ -34,10 +34,13 @@ class Person:
                      print(i)
                  print('get all function successfully worked')
     @staticmethod
-    def get_one():
+    def get_one(person_id):
        with DatabaseConnect(**data_base) as conn:
            with conn.cursor() as cur:
-               cur.execute("""select * from person;""")
+               query = """select * from person
+                              where id = %s;"""
+               data = (person_id,)
+               cur.execute(query,data)
                print(cur.fetchone())
                print('get one function successfully worked')
 
@@ -47,9 +50,8 @@ class Person:
 # data = Person('sherali olimov', 25)
 # data2 = Person('Ali aliyev',20)
 # data3 = Person('Vali valiyev',27)
-#
 # data.save()
 # data2.save()
 # data3.save()
 # data.get_all()
-# data.get_one()
+# data.get_one(1)
